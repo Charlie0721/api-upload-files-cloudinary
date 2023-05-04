@@ -57,7 +57,7 @@ export class UploadFileService {
             if (!newPath) {
                 return res.status(400).json({ error: "Debe cargar un archivo PDF" });
             }
-         
+
             //@ts-ignore
             const result = await cloudinary.v2.uploader.upload(newPath);
 
@@ -89,5 +89,26 @@ export class UploadFileService {
 
     }
 
+    static deleteFile = async (req: Request, res: Response) => {
+
+        try {
+
+            const { _id } = req.params
+            const file = await Manifest.findByIdAndDelete(_id);
+            //@ts-ignore
+            const result = await cloudinary.v2.uploader.destroy(file.public_id)
+            return res.status(200).json({result,
+            message:"archivo eliminado satisfactoriamente"})
+
+        } catch (error) {
+            console.log(error)
+            return res.json({
+                status: 500,
+                error: error
+            })
+        }
+    }
 
 }
+
+
