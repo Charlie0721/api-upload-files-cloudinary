@@ -1,8 +1,5 @@
 import { Request, Response } from 'express'
-
 import Manifest from '../models/manifest.model'
-import dotenv from 'dotenv';
-dotenv.config();
 
 import cloudinary from 'cloudinary'
 
@@ -14,25 +11,35 @@ cloudinary.v2.config({
 
 })
 
-
 export class DeleteFileService {
 
 
     /**
     Eliminar archivo por ID
     */
-    static deleteFile = async (req: Request, res: Response) => {
+    static deleteFile = async (req: Request, res: Response): Promise<Response> => {
 
         try {
 
             const { _id } = req.params
-            const file = await Manifest.findByIdAndDelete(_id);
-            //@ts-ignore
-            const result = await cloudinary.v2.uploader.destroy(file.public_id)
-            return res.status(200).json({
-                result,
-                message: "archivo eliminado satisfactoriamente"
+
+            const sendFile = await Manifest.findOne({
+                _id
             })
+
+            if (sendFile) {
+
+                const file = await Manifest.findByIdAndDelete(_id);
+                //@ts-ignore
+                const result = await cloudinary.v2.uploader.destroy(file.public_id)
+                return res.status(200).json({
+                    result,
+                    message: "archivo eliminado satisfactoriamente"
+                })
+            } else {
+                return res.json({ message: "archivo no encontrado" })
+            }
+
 
         } catch (error) {
             console.log(error)

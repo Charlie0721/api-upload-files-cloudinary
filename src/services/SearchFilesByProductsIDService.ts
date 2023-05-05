@@ -1,8 +1,6 @@
 import { Request, Response } from 'express'
 
 import Manifest from '../models/manifest.model'
-import dotenv from 'dotenv';
-dotenv.config();
 
 import cloudinary from 'cloudinary'
 

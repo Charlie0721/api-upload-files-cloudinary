@@ -10,6 +10,7 @@ const manifestPhoto = new Schema({
     },
     imageURL: String,
     public_id: String,
+    originalFileName:String,
     created_at: {
         type: Date,
         default: Date.now

@@ -20,12 +20,13 @@ export class UploadFileToCloudinaryService{
    /**
     Subir archivos
     */
-    static uploadFiles = async (req: Request, res: Response) => {
+    static uploadFiles = async (req: Request, res: Response):Promise<Response> => {
 
         try {
             const newFile: SendDataManifest = req.body
             //@ts-ignore
             const newPath = req.file && req.file.path;
+          
             //@ts-ignore
             if (!newPath) {
                 return res.status(400).json({ error: "Debe cargar un archivo PDF" });
@@ -33,12 +34,13 @@ export class UploadFileToCloudinaryService{
 
             //@ts-ignore
             const result = await cloudinary.v2.uploader.upload(newPath);
-
+          
             const newManifest = new Manifest({
                 purchaseNumber: newFile.purchaseNumber,
                 productId: newFile.productId,
                 imageURL: result.url,
-                public_id: result.public_id
+                public_id: result.public_id,
+                originalFileName:result.original_filename
             })
             //@ts-ignore
             await newManifest.save()

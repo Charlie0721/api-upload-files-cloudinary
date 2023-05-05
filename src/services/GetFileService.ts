@@ -1,9 +1,5 @@
 import { Request, Response } from 'express'
-
 import Manifest from '../models/manifest.model'
-import dotenv from 'dotenv';
-dotenv.config();
-
 import cloudinary from 'cloudinary'
 
 cloudinary.v2.config({
@@ -16,7 +12,7 @@ cloudinary.v2.config({
 
 export class GetFileService {
 
-    static getFile = async (req: Request, res: Response) => {
+    static getFile = async (req: Request, res: Response):Promise<Response> => {
         try {
             const id: string = req.params._id
             const findFile = await Manifest.findById({

@@ -1,10 +1,5 @@
-
 import { Request, Response } from 'express'
-
 import Manifest from '../models/manifest.model'
-import dotenv from 'dotenv';
-dotenv.config();
-
 import cloudinary from 'cloudinary'
 
 cloudinary.v2.config({
@@ -18,9 +13,9 @@ cloudinary.v2.config({
 export class GetFilesService {
 
     /**
-      Obtener todos los arcivos pdf
+      Obtener todos los archivos pdf
       */
-    static getFiles = async (req: Request, res: Response) => {
+    static getFiles = async (req: Request, res: Response):Promise<Response> => {
 
         try {
 
