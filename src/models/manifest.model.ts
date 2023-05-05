@@ -1,5 +1,5 @@
-import { Schema, model } from 'mongoose'
-
+import { Schema, model, Document } from 'mongoose'
+import {SendDataManifest} from '../interfaces/Send_Data.interface'
 const manifestPhoto = new Schema({
 
     purchaseNumber: {
@@ -20,4 +20,4 @@ const manifestPhoto = new Schema({
     }
 })
 
-export default model('Manifest', manifestPhoto)
+export default model<SendDataManifest & Document>('Manifest', manifestPhoto)

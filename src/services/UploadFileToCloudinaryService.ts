@@ -14,39 +14,12 @@ cloudinary.v2.config({
     api_secret: process.env.CLOUDINARY_APY_SECRET
 
 })
-export class UploadFileService {
 
+export class UploadFileToCloudinaryService{
 
-    static getFiles = async (req: Request, res: Response) => {
-
-        try {
-
-            const files = await Manifest.find()
-            if (files.length > 0) {
-                return res.json({
-                    status: 200,
-                    mesagge: "pdf found successfully",
-                    files
-                })
-            }
-            return res.json({
-                status: 404,
-                message: "files not found"
-            })
-
-
-        } catch (error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                error: error
-            })
-        }
-
-
-    }
-
-
+   /**
+    Subir archivos
+    */
     static uploadFiles = async (req: Request, res: Response) => {
 
         try {
@@ -89,26 +62,4 @@ export class UploadFileService {
 
     }
 
-    static deleteFile = async (req: Request, res: Response) => {
-
-        try {
-
-            const { _id } = req.params
-            const file = await Manifest.findByIdAndDelete(_id);
-            //@ts-ignore
-            const result = await cloudinary.v2.uploader.destroy(file.public_id)
-            return res.status(200).json({result,
-            message:"archivo eliminado satisfactoriamente"})
-
-        } catch (error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                error: error
-            })
-        }
-    }
-
 }
-
-
