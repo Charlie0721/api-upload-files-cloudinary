@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import Manifest from '../models/manifest.model'
+import Manifest from '../../models/manifest.model';
 
 import cloudinary from 'cloudinary'
 

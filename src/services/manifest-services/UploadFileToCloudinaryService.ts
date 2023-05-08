@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
-import { SendDataManifest } from '../interfaces/Send_Data.interface'
-import Manifest from '../models/manifest.model'
+import { SendDataManifest } from '../../interfaces/Send_Data.interface'
+import Manifest from '../../models/manifest.model'
 import dotenv from 'dotenv';
 dotenv.config();
 import * as fs from 'fs-extra'
