@@ -30,11 +30,6 @@ export class LoginService {
             return res.status(400).json({ message: "Password no valido" });
         }
 
-
-
-
     }
-
-
 
 }
