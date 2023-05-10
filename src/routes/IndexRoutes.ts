@@ -16,7 +16,7 @@ router.post('/search-products-id/', SearchFilesByProductsIDService.searchByProdu
 router.get('/get-files', GetFilesService.getFiles)
 router.get('/get-file/:_id',GetFileService.getFile )
 router.get('/get-file-by-name/',SearchFileByNameService.searchFileByName )
-router.get('/get-files-by-productsid',GetFilesByPRoductsId.getFiles )
+router.get('/get-files-by-productsid/:productId',GetFilesByPRoductsId.getFiles )
 router.delete('/delete-file/:_id',DeleteFileService.deleteFile )
 router.post('/signup', SignupService.signUp)
 router.post('/signin', LoginService.signin)
