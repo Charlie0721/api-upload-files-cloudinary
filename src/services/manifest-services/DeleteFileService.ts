@@ -34,7 +34,7 @@ export class DeleteFileService {
                 const result = await cloudinary.v2.uploader.destroy(file.public_id)
                 return res.status(200).json({
                     result,
-                    message: "archivo eliminado satisfactoriamente"
+                    message: "Manifiesto eliminado satisfactoriamente"
                 })
             } else {
                 return res.json({ message: "archivo no encontrado" })
