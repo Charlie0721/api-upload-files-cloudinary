@@ -32,6 +32,8 @@ export class DeleteFileService {
                 const file = await Manifest.findByIdAndDelete(_id);
                 //@ts-ignore
                 const result = await cloudinary.v2.uploader.destroy(file.public_id)
+
+
                 return res.status(200).json({
                     result,
                     message: "Manifiesto eliminado satisfactoriamente"

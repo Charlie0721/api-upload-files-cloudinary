@@ -36,7 +36,6 @@ export class UploadFileToCloudinaryService{
             const result = await cloudinary.v2.uploader.upload(newPath);
           
             const newManifest = new Manifest({
-                purchaseNumber: newFile.purchaseNumber,
                 productId: newFile.productId,
                 imageURL: result.url,
                 public_id: result.public_id,
