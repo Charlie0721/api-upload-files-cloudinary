@@ -22,7 +22,7 @@ class Database {
       throw new Error('Environment variable not found: MONGODB_URL');
     }
 
-    const connectionString = `mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}/${MONGODB_DATABASE}`;
+    const connectionString = `mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}`;
 
     mongoose
       .connect(connectionString, {
