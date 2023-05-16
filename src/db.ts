@@ -8,7 +8,7 @@ class Database {
     this.connect();
   }
   connect() {
-    const MONGODB_URI = process.env.MONGODB_URI;
+    const MONGODB_URI = process.env.MONGODB_URI+"/upload_manifests";
     if (!MONGODB_URI) {
       throw new Error('Environment variable not found MONGODB_URI');
     }
