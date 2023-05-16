@@ -8,7 +8,7 @@ class Database {
 
   connect() {
     const { MONGO_URL, MONGOHOST, MONGOPASSWORD, MONGOPORT, MONGOUSER } = process.env;
-    const connectionString = `mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}/${MONGO_URL}`;
+    const connectionString = `mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}/${MONGO_URL}?retryWrites=true&w=majority`;
 
     if (!connectionString) {
       throw new Error('Environment variable not found');
