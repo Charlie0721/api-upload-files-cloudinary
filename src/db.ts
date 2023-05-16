@@ -8,12 +8,12 @@ class Database {
     this.connect();
   }
   connect() {
-    const MONGODB_URL = process.env.MONGODB_URI;
-    if (!MONGODB_URL) {
+    const MONGODB_URI = process.env.MONGODB_URI;
+    if (!MONGODB_URI) {
       throw new Error('Environment variable not found MONGODB_URI');
     }
     mongoose
-      .connect(MONGODB_URL)
+      .connect(MONGODB_URI)
       .then(() => {
         console.log('Connected to MongoDB database');
       })
