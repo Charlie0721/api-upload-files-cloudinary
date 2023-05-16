@@ -2,18 +2,20 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 dotenv.config();
 class Database {
-
-
   constructor() {
     this.connect();
   }
+
   connect() {
-    const MONGODB_URI = process.env.MONGODB_URI;
-    if (!MONGODB_URI) {
-      throw new Error('Environment variable not found MONGODB_URI');
+    const { MONGO_URL, MONGOHOST, MONGOPASSWORD, MONGOPORT, MONGOUSER } = process.env;
+    const connectionString = `mongodb://${MONGOUSER}:${MONGOPASSWORD}@${MONGOHOST}:${MONGOPORT}/${MONGO_URL}`;
+
+    if (!connectionString) {
+      throw new Error('Environment variable not found');
     }
+
     mongoose
-      .connect(MONGODB_URI)
+      .connect(connectionString)
       .then(() => {
         console.log('Connected to MongoDB database');
       })
@@ -24,3 +26,4 @@ class Database {
 }
 
 export default new Database();
+
