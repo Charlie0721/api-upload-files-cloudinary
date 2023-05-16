@@ -23,7 +23,6 @@ export class GetFilesService {
             const limit = parseInt(req.query.limit as string) || 10;
             const skip = (page - 1) * limit;
 
-
             const files = await Manifest.find().skip(skip).limit(limit).exec();
             if (files.length > 0) {
                 return res.json({
