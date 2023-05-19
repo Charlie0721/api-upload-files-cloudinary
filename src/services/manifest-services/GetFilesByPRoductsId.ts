@@ -11,7 +11,7 @@ cloudinary.v2.config({
 
 })
 
-export class GetFilesByPRoductsId {
+export class GetFilesByManifestId {
 
   static getFiles = async (req: Request, res: Response) => {
     const manifestPosId: string[] = (req.params.manifestPosId as string).split(",");
