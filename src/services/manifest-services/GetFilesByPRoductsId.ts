@@ -15,26 +15,26 @@ export class GetFilesByManifestId {
 
   static getFiles = async (req: Request, res: Response) => {
     const manifestPosId: string[] = (req.params.manifestPosId as string).split(",");
-    const manifestPosIdNumbers: number[] = [];
-    manifestPosId.forEach((id: string) => {
+ 
+    const manifestPosIdNumbers: number[] = manifestPosId.map((id: string) => {
       const parsedId = Number(id);
-      if (!isNaN(parsedId)) {
-        manifestPosIdNumbers.push(parsedId);
-      }
+      return isNaN(parsedId) ? 0 : parsedId;
     });
+    
     if (manifestPosIdNumbers.length === 0) {
       res.status(400).send('Invalid manifestPosId parameter');
       return;
     }
+    
     try {
       const response = await Manifest.find({
-        manifestPosId: { $in: manifestPosIdNumbers, $ne: [manifestPosId[0]] }
+        manifestPosId: { $in: manifestPosIdNumbers.map(String) }
       }).exec();
       res.send(response);
     } catch (err) {
       console.log(err);
       res.status(500).send(err);
-    }
+    } 
 
    
   }
