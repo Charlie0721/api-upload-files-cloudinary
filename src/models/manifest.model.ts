@@ -2,7 +2,7 @@ import { Schema, model, Document } from 'mongoose'
 import { SendDataManifest } from '../interfaces/Send_Data.interface'
 const manifestPhoto = new Schema({
 
-    productId: {
+    manifestPosId: {
         type: [Number],
     },
     imageURL: String,

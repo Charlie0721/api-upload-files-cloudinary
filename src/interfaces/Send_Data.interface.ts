@@ -1,5 +1,5 @@
 export interface SendDataManifest {
-    productId: number[];
+    manifestPosId: number[];
     imageURL: string,
     public_id: string,
     originalFileName: string
