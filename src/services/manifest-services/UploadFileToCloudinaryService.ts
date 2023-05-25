@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 import { SendDataManifest } from '../../interfaces/Send_Data.interface'
 import Manifest from '../../models/manifest.model'
+import multer from 'multer';
 import dotenv from 'dotenv';
 dotenv.config();
 import * as fs from 'fs-extra'
@@ -15,53 +16,46 @@ cloudinary.v2.config({
 
 })
 
-export class UploadFileToCloudinaryService{
 
-   /**
-    Subir archivos
-    */
-    static uploadFiles = async (req: Request, res: Response):Promise<Response> => {
-
+export class UploadFileToCloudinaryService {
+    static uploadFiles = async (req: Request, res: Response): Promise<Response> => {
         try {
-            const newFile: SendDataManifest = req.body
-          //  console.log(newFile)
-            //@ts-ignore
-            const newPath = req.file && req.file.path;
-          console.log(newPath)
-            //@ts-ignore
-            if (!newPath) {
-                return res.status(400).json({ error: "Debe cargar un archivo PDF" });
+            const newFile: SendDataManifest = req.body;
+
+
+            const fileBase64 = req.body.fileBase64;
+            const fileBuffer = Buffer.from(fileBase64, 'base64');
+            const tempFilePath = './temp-file';
+            fs.writeFileSync(tempFilePath, fileBuffer);
+            if (!newFile.fileBase64) {
+                return res.status(400).json({ error: 'Debe proporcionar un archivo en formato Base64' });
             }
 
-            //@ts-ignore
-            const result = await cloudinary.v2.uploader.upload(newPath);
-          
+            const result = await cloudinary.v2.uploader.upload(tempFilePath, {
+                resource_type: 'auto',
+            });
+
             const newManifest = new Manifest({
                 manifestPosId: newFile.manifestPosId,
                 imageURL: result.url,
                 public_id: result.public_id,
-                originalFileName:result.original_filename
-            })
-            //@ts-ignore
-            await newManifest.save()
-            //@ts-ignore
-            await fs.unlink(req.file.path)
+                originalFileName: result.original_filename,
+            });
 
+
+            await newManifest.save();
+            fs.unlinkSync(tempFilePath)
             return res.status(200).json({
                 status: 200,
-                mesagge: "pdf successfully uploaded to cloudinary",
-                newManifest
-
-            })
-
-        } catch (error) {
-            console.log(error)
-            return res.json({
-                status: 500,
-                error: error
-            })
+                message: 'Archivo subido exitosamente a Cloudinary',
+                newManifest,
+            });
+        } catch (error: any) {
+            console.log(error);
+            return res.status(500).json({
+                error: 'Error en el servidor',
+                errorAPI: error.message
+            });
         }
-
-    }
-
+    };
 }

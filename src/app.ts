@@ -1,7 +1,7 @@
-import express, { Application,Request } from 'express';
+import express, { Application, Request } from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import multer   from 'multer';
+import multer from 'multer';
 import path from 'path';
 import IndexRoutes from './routes/IndexRoutes'
 import Database from './db';
@@ -15,30 +15,23 @@ export class App {
         this.settings();
         this.middlewares();
         this.routes()
-        Database; 
+        Database;
     }
     settings() {
         this.app.set('port', this.port || process.env.PORT || 4000);
     }
 
     middlewares() {
-  
+
         this.app.use(morgan('dev'));
         this.app.use(express.urlencoded({ extended: false }));
-        this.app.use(express.json());
-        const storage=multer.diskStorage({
-            destination:path.join(__dirname, 'public/uploads'),
-            filename:(req:Request,file,cb)=>{
-                cb(null,"manifest"+new Date().getTime()+ path.extname(file.originalname))
-            }
-        })
-        this.app.use(multer({storage}).single('manifest'))
+        this.app.use(express.json({ limit: '50mb' }));
         this.app.use(cors());
 
     }
     routes() {
 
-    this.app.use('/api/v1', IndexRoutes)
+        this.app.use('/api/v1', IndexRoutes)
     }
     async listen() {
 

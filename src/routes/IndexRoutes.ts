@@ -1,5 +1,5 @@
 import { Router } from 'express'
-
+import multer  from 'multer';
 import { UploadFileToCloudinaryService } from '../services/manifest-services/UploadFileToCloudinaryService';
 import { DeleteFileService } from '../services/manifest-services/DeleteFileService';
 import { GetFileService } from '../services/manifest-services/GetFileService';
@@ -9,9 +9,11 @@ import {SearchFileByNameService  } from '../services/manifest-services/SearchFil
 import {SignupService} from '../services/user-services/SignupService';
 import {LoginService} from '../services/user-services/SigninService'
 import {GetFilesByManifestId} from '../services/manifest-services/GetFilesByPRoductsId';
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 const router = Router()
 
-router.post('/upload-file',UploadFileToCloudinaryService.uploadFiles )
+router.post('/upload-file',upload.single('fileBase64'),UploadFileToCloudinaryService.uploadFiles )
 router.post('/search-products-id/', SearchFilesByProductsIDService.searchByProductsID)
 router.get('/get-files', GetFilesService.getFiles)
 router.get('/get-file/:_id',GetFileService.getFile )
