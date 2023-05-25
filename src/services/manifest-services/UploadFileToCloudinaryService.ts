@@ -24,9 +24,10 @@ export class UploadFileToCloudinaryService{
 
         try {
             const newFile: SendDataManifest = req.body
+          //  console.log(newFile)
             //@ts-ignore
             const newPath = req.file && req.file.path;
-          
+          console.log(newPath)
             //@ts-ignore
             if (!newPath) {
                 return res.status(400).json({ error: "Debe cargar un archivo PDF" });
