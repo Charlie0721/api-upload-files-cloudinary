@@ -5,6 +5,7 @@ const manifestPhoto = new Schema({
     manifestPosId: {
         type: [Number],
     },
+    manifestName:String,
     imageURL: String,
     public_id: String,
     originalFileName: String,

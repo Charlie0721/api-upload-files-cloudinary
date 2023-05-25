@@ -4,4 +4,5 @@ export interface SendDataManifest {
     imageURL: string,
     public_id: string,
     originalFileName: string
+    manifestName: string
 }

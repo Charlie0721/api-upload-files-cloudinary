@@ -37,6 +37,7 @@ export class UploadFileToCloudinaryService {
 
             const newManifest = new Manifest({
                 manifestPosId: newFile.manifestPosId,
+                manifestName: newFile.manifestName,
                 imageURL: result.url,
                 public_id: result.public_id,
                 originalFileName: result.original_filename,
