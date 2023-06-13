@@ -9,6 +9,7 @@ import {SearchFileByNameService  } from '../services/manifest-services/SearchFil
 import {SignupService} from '../services/user-services/SignupService';
 import {LoginService} from '../services/user-services/SigninService'
 import {GetFilesByManifestId} from '../services/manifest-services/GetFilesByPRoductsId';
+import {DonwloadManifestService} from '../services/manifest-services/DownloadFileService';
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const router = Router()
@@ -22,6 +23,7 @@ router.get('/get-files-by-manifestposid/:manifestPosId',GetFilesByManifestId.get
 router.delete('/delete-file/:_id',DeleteFileService.deleteFile )
 router.post('/signup', SignupService.signUp)
 router.post('/signin', LoginService.signin)
+router.get('/download-manifest/:public_id',DonwloadManifestService.downloadManifest )
 
 
 export default router
